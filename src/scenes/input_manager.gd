@@ -2,6 +2,8 @@ extends Node3D
 
 @onready var camera: Camera3D = $"../Camera3D"
 @onready var grid_manager: Node3D = $"../GridManager"
+@onready var chef: Node3D = $"../Chef"
+@onready var nav_manager: Node3D = $"../NavManager"
 
 var last_hovered_coord: Vector2i = Vector2i(-999, -999)
 
@@ -9,6 +11,22 @@ var last_hovered_coord: Vector2i = Vector2i(-999, -999)
 func _ready() -> void:
 	pass # Replace with function body.
 
+func _input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			var requested_grid_coord = get_mouse_grid_position()
+			var chef_pos_2D = grid_manager.world_to_grid(chef.position)
+			
+			if (requested_grid_coord != chef_pos_2D) and requested_grid_coord != Vector2i(-1, -1):
+				var grid_path = nav_manager.get_navigation_path(chef_pos_2D, requested_grid_coord)
+				
+				var world_waypoints: Array[Vector3] = []
+				for coord in grid_path:
+					var world_pos = grid_manager.grid_to_world_PLAYER(coord)
+					world_waypoints.append(world_pos)
+				
+				if not world_waypoints.is_empty():
+					chef.move(world_waypoints)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -26,7 +44,7 @@ func _process(delta: float) -> void:
 	# print("Hovering over: ", current_grid_coord)
 	
 	pass
-
+			
 func get_mouse_grid_position() -> Vector2i:
 	var mouse_pos = get_viewport().get_mouse_position()
 	

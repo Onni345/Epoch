@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://dt7w6dhi0om7h"]
 
 [ext_resource type="Script" uid="uid://8si6vgqc5bxo" path="res://src/scenes/grid_manager.gd" id="1_kkvs4"]
+[ext_resource type="Script" uid="uid://cevj46exbpm6n" path="res://src/scenes/nav_manager.gd" id="2_32aa5"]
 [ext_resource type="Script" uid="uid://2gko715kaj8t" path="res://src/scenes/input_manager.gd" id="2_rr2wm"]
+[ext_resource type="Script" uid="uid://btcmc2hh2qnwe" path="res://src/scenes/chef.gd" id="3_5dlwx"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1fxj6"]
 
@@ -33,9 +35,12 @@ size = 14.0
 script = ExtResource("1_kkvs4")
 
 [node name="NavManager" type="Node3D" parent="SubViewportContainer/SubViewport/GameWorld" unique_id=469831101]
+visible = false
+script = ExtResource("2_32aa5")
 
 [node name="Chef" type="CharacterBody3D" parent="SubViewportContainer/SubViewport/GameWorld" unique_id=1484522133]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.9, 0.5)
+script = ExtResource("3_5dlwx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/GameWorld/Chef" unique_id=1008707742]
 shape = SubResource("CapsuleShape3D_1fxj6")

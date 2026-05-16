@@ -15,10 +15,22 @@ func _process(delta: float) -> void:
 
 func world_to_grid(world_pos: Vector3) -> Vector2i:
 	
-	var x = floor(world_pos.x / cell_size + grid_size.x) - grid_size.x
-	var z = floor(world_pos.z / cell_size + grid_size.y) - grid_size.y
+	var x = floor(world_pos.x / cell_size)
+	var z = floor(world_pos.z / cell_size)
 	
 	return Vector2i(x, z)
+	
+func grid_to_world(coords: Vector2i) -> Vector3:
+	var world_x = coords.x * cell_size + (cell_size / 2.0)
+	var world_z = coords.y * cell_size + (cell_size / 2.0)
+	return Vector3(world_x, 0, world_z)
+
+func grid_to_world_PLAYER(coords: Vector2i) -> Vector3:
+	var world_x = coords.x * cell_size + (cell_size / 2.0)
+	var world_z = coords.y * cell_size + (cell_size / 2.0)
+	
+	# keep the player above tiles
+	return Vector3(world_x, 0.9, world_z)
 
 func generate_grid_visuals() -> void:
 	for x in grid_size.x:
