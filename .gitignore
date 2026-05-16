@@ -1,3 +1,18 @@
-# Godot 4+ specific ignores
+# Godot 4 specific internal caches and binary files
 .godot/
-/android/
+*.translation
+
+# Mono/C# specific ignores (keep this even if using GDScript just in case)
+.mono/
+data_*/
+mono_crash_*.json
+
+# Android/iOS export logs and binaries if you build for them later
+android/
+ios/
+
+# System and OS specific junk files
+.DS_Store
+*.tmp
+Thumbs.db
+desktop.ini
