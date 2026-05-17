@@ -14,6 +14,12 @@ config/name="CookingGame"
 run/main_scene="uid://dt7w6dhi0om7h"
 config/features=PackedStringArray("4.6", "Forward Plus")
 
+[display]
+
+window/size/viewport_width=2560
+window/size/viewport_height=1440
+window/stretch/mode="canvas_items"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

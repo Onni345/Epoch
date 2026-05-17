@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bemhhdys86xfy"]
+
+[ext_resource type="Script" uid="uid://btcmc2hh2qnwe" path="res://src/entities/chef/chef.gd" id="1_hx4xs"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1fxj6"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_kkvs4"]
+
+[node name="Chef" type="CharacterBody3D" unique_id=393815507]
+script = ExtResource("1_hx4xs")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1441985242]
+shape = SubResource("CapsuleShape3D_1fxj6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1462057107]
+mesh = SubResource("CapsuleMesh_kkvs4")

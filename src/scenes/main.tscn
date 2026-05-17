@@ -3,11 +3,7 @@
 [ext_resource type="Script" uid="uid://8si6vgqc5bxo" path="res://src/scenes/grid_manager.gd" id="1_kkvs4"]
 [ext_resource type="Script" uid="uid://cevj46exbpm6n" path="res://src/scenes/nav_manager.gd" id="2_32aa5"]
 [ext_resource type="Script" uid="uid://2gko715kaj8t" path="res://src/scenes/input_manager.gd" id="2_rr2wm"]
-[ext_resource type="Script" uid="uid://btcmc2hh2qnwe" path="res://src/scenes/chef.gd" id="3_5dlwx"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1fxj6"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_kkvs4"]
+[ext_resource type="PackedScene" uid="uid://bemhhdys86xfy" path="res://src/entities/chef/chef.tscn" id="4_5dlwx"]
 
 [node name="Main" type="Node3D" unique_id=12805535]
 
@@ -38,18 +34,10 @@ script = ExtResource("1_kkvs4")
 visible = false
 script = ExtResource("2_32aa5")
 
-[node name="Chef" type="CharacterBody3D" parent="SubViewportContainer/SubViewport/GameWorld" unique_id=1484522133]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.9, 0.5)
-script = ExtResource("3_5dlwx")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/GameWorld/Chef" unique_id=1008707742]
-shape = SubResource("CapsuleShape3D_1fxj6")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/GameWorld/Chef" unique_id=1819937307]
-mesh = SubResource("CapsuleMesh_kkvs4")
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/GameWorld" unique_id=495149145]
 transform = Transform3D(0.8660254, -0.35355338, 0.35355338, 0, 0.70710677, 0.70710677, -0.5, -0.6123724, 0.6123724, 1.5415446, 5, 2.357998)
 
 [node name="InputManager" type="Node3D" parent="SubViewportContainer/SubViewport/GameWorld" unique_id=1465573164]
 script = ExtResource("2_rr2wm")
+
+[node name="Chef" parent="SubViewportContainer/SubViewport/GameWorld" unique_id=393815507 instance=ExtResource("4_5dlwx")]
