@@ -1,12 +1,17 @@
 [gd_scene format=3 uid="uid://bbkqbnxelxmrv"]
 
-[ext_resource type="Script" uid="uid://cm2fhjg7hdyrr" path="res://src/scenes/tile.gd" id="1_vu8gl"]
-
 [sub_resource type="PlaneMesh" id="PlaneMesh_qwxwg"]
 size = Vector2(0.95, 0.95)
 
-[node name="FloorTile" type="Node3D" unique_id=789745288]
-script = ExtResource("1_vu8gl")
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(1, 0.01, 1)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1999656989]
+[node name="FloorTile" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_qwxwg")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_floor")

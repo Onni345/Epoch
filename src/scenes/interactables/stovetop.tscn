@@ -4,10 +4,20 @@
 albedo_color = Color(1, 0.2509804, 1, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_2cwd0"]
-size = Vector3(0.95, 1, 0.9)
+size = Vector3(0.92, 0.75, 0.92)
 
-[node name="Stovetop" type="Node3D" unique_id=469974665]
+[sub_resource type="BoxShape3D" id="BoxShape3D_stove"]
+size = Vector3(1, 0.75, 1)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=726220584]
+[node name="Stovetop" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.375, 0)
 material_override = SubResource("StandardMaterial3D_v64eb")
 mesh = SubResource("BoxMesh_2cwd0")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.375, 0)
+shape = SubResource("BoxShape3D_stove")

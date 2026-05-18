@@ -52,11 +52,22 @@ func get_mouse_grid_position() -> Vector2i:
 	
 	var ray_origin = camera.project_ray_origin(mouse_pos)
 	var ray_normal = camera.project_ray_normal(mouse_pos)
+	var ray_end = ray_origin + (ray_normal * 1000.0)
 	
-	var floor_plane = Plane(Vector3.UP, 0.0)
-	var intersection_point = floor_plane.intersects_ray(ray_origin, ray_normal)
-	if intersection_point != null:
-		return grid_manager.world_to_grid(intersection_point)
+	var space_state = get_world_3d().direct_space_state
+	var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
+	
+	query.collide_with_areas = true
+	query.collide_with_bodies = false
+	
+	var result = space_state.intersect_ray(query)
+	
+	if not result.is_empty():
+		# PUSH THE POINT INSIDE THE BOX:
+		# Take the surface hit position, and subtract a tiny 0.05 unit step 
+		# directly along the face's normal vector.
+		var adjusted_position = result.position - (result.normal * 0.05)
+		return grid_manager.world_to_grid(adjusted_position)
 	
 	return Vector2i(-1, -1)
 
