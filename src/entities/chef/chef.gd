@@ -4,6 +4,9 @@ const EPS = 0.05
 var movement_waypoints: Array[Vector3] = []
 @export var movement_speed: float = 5.0
 
+func _ready() -> void:
+	global_position = Vector3(1.0, 0.9, 1.0)
+	
 func move(new_path: Array[Vector3]) -> void:
 	movement_waypoints = new_path
 

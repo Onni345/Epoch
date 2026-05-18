@@ -6,10 +6,31 @@ signal grid_generation_completed
 @export var grid_size: Vector2i = Vector2i(15, 15)
 @export var cell_size: float = 1.0
 
+# A conceptual example of a Map Data Library
+# 0 = Floor, 1 = Countertop, 2 = Stovetop
+const grid_width = 15
+const MAP_LEVEL_1: Array[int] = [
+	1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1,
+	1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1,
+	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+]
+
 var tile_registry: Dictionary = {}
 
 func _ready() -> void:
-	initialize_and_generate_grid()
+	initialize_and_generate_grid(MAP_LEVEL_1)
 
 func world_to_grid(world_pos: Vector3) -> Vector2i:
 	var x = floor(world_pos.x / cell_size)
@@ -26,23 +47,25 @@ func grid_to_world_PLAYER(coords: Vector2i) -> Vector3:
 	var world_z = coords.y * cell_size + (cell_size / 2.0)
 	return Vector3(world_x, 0.9, world_z)
 
-func initialize_and_generate_grid() -> void:
-	for x in grid_size.x:
-		for z in grid_size.y:
-			var coord = Vector2i(x, z)
-			var new_tile = tile_master_scene.instantiate() as Tile
-			
-			if x >= 3 and x <= 5 and z >= 3 and z <= 5:
-				new_tile.current_type = Tile.TileType.COUNTERTOP
-			else:
-				new_tile.current_type = Tile.TileType.FLOOR
-			
-			var world_x = x * cell_size + (cell_size / 2.0)
-			var world_z = z * cell_size + (cell_size / 2.0)
-			new_tile.transform.origin = Vector3(world_x, 0, world_z)
-			
-			tile_registry[coord] = new_tile
-			add_child(new_tile)
+func initialize_and_generate_grid(map_data: Array[int]) -> void:
+	var num_tiles = len(map_data)
+	for idx in num_tiles:
+		# row ("OUT") in worldspace
+		var z = floori(idx / grid_width)
+		
+		# column ("LEFT/RIGHT") in worldspace
+		var x = idx % grid_width
+		
+		var coord = Vector2i(x, z)
+		var new_tile = tile_master_scene.instantiate() as Tile
+		
+		var world_x = x * cell_size + (cell_size / 2.0)
+		var world_z = z * cell_size + (cell_size / 2.0)
+		new_tile.transform.origin = Vector3(world_x, 0, world_z)
+		new_tile.current_type = map_data[idx] as Tile.TileType
+		
+		tile_registry[coord] = new_tile
+		add_child(new_tile)
 			
 	grid_generation_completed.emit()
 
