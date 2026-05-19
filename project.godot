@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="CookingGame"
-run/main_scene="uid://dt7w6dhi0om7h"
+run/main_scene="uid://cotfeg4xh8h1b"
 config/features=PackedStringArray("4.6", "Forward Plus")
 
 [display]

@@ -1,43 +1,20 @@
-[gd_scene format=3 uid="uid://dt7w6dhi0om7h"]
+[gd_scene format=3 uid="uid://cotfeg4xh8h1b"]
 
-[ext_resource type="Script" uid="uid://8si6vgqc5bxo" path="res://src/scenes/grid_manager.gd" id="1_kkvs4"]
-[ext_resource type="Script" uid="uid://cevj46exbpm6n" path="res://src/scenes/nav_manager.gd" id="2_32aa5"]
-[ext_resource type="Script" uid="uid://2gko715kaj8t" path="res://src/scenes/input_manager.gd" id="2_rr2wm"]
-[ext_resource type="PackedScene" uid="uid://bemhhdys86xfy" path="res://src/entities/chef/chef.tscn" id="4_5dlwx"]
+[ext_resource type="Script" uid="uid://flsretq65gop" path="res://src/scenes/level_director.gd" id="1_director"]
+[ext_resource type="Script" uid="uid://8si6vgqc5bxo" path="res://src/scenes/grid_manager.gd" id="2_grid"]
+[ext_resource type="Script" uid="uid://cevj46exbpm6n" path="res://src/scenes/nav_manager.gd" id="3_nav"]
+[ext_resource type="Script" uid="uid://2gko715kaj8t" path="res://src/scenes/input_manager.gd" id="4_input"]
 
-[node name="Main" type="Node3D" unique_id=12805535]
+[node name="Main" type="Node3D" unique_id=280920864]
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1185425245]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-stretch = true
+[node name="LevelDirector" type="Node3D" parent="." unique_id=1775325125]
+script = ExtResource("1_director")
 
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1125963343]
-handle_input_locally = false
-size = Vector2i(1152, 648)
-render_target_update_mode = 4
+[node name="GridManager" type="Node3D" parent="." unique_id=717908009]
+script = ExtResource("2_grid")
 
-[node name="GameWorld" type="Node3D" parent="SubViewportContainer/SubViewport" unique_id=803481125]
+[node name="NavManager" type="Node3D" parent="." unique_id=1164748494]
+script = ExtResource("3_nav")
 
-[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/GameWorld" unique_id=1921228511]
-transform = Transform3D(-0.70710677, 0.40860698, -0.57709634, 0, 0.81613755, 0.57785755, 0.70710665, 0.40860704, -0.5770964, -20, 25, -20)
-projection = 1
-size = 14.0
-
-[node name="GridManager" type="Node3D" parent="SubViewportContainer/SubViewport/GameWorld" unique_id=2010418119]
-script = ExtResource("1_kkvs4")
-
-[node name="NavManager" type="Node3D" parent="SubViewportContainer/SubViewport/GameWorld" unique_id=469831101]
-visible = false
-script = ExtResource("2_32aa5")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/GameWorld" unique_id=495149145]
-transform = Transform3D(0.8660254, -0.35355338, 0.35355338, 0, 0.70710677, 0.70710677, -0.5, -0.6123724, 0.6123724, 1.5415446, 5, 2.357998)
-
-[node name="InputManager" type="Node3D" parent="SubViewportContainer/SubViewport/GameWorld" unique_id=1465573164]
-script = ExtResource("2_rr2wm")
-
-[node name="Chef" parent="SubViewportContainer/SubViewport/GameWorld" unique_id=393815507 instance=ExtResource("4_5dlwx")]
+[node name="InputManager" type="Node3D" parent="." unique_id=916092614]
+script = ExtResource("4_input")

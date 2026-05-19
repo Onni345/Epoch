@@ -1,9 +1,12 @@
 extends Node3D
 
-@onready var camera: Camera3D = $"../Camera3D"
+# exist statically inside main.tscn
 @onready var grid_manager: Node3D = $"../GridManager"
-@onready var chef: Node3D = $"../Chef"
 @onready var nav_manager: Node3D = $"../NavManager"
+
+# must be binded dynamically, cannot use onready
+var camera: Camera3D = null
+var chef: Node3D = null
 
 var last_hovered_coord: Vector2i = Vector2i(-999, -999)
 
@@ -35,7 +38,7 @@ func _input(event):
 				if not world_waypoints.is_empty():
 					chef.move(world_waypoints)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var current_grid_coord = get_mouse_grid_position()
 	if (current_grid_coord != last_hovered_coord):
 		var old_tile: Node3D = grid_manager.get_tile_at(last_hovered_coord)
@@ -46,7 +49,7 @@ func _process(delta: float) -> void:
 		if new_tile != null:
 			new_tile.set_hover_state(true)
 		last_hovered_coord = current_grid_coord
-            
+			
 func get_mouse_grid_position() -> Vector2i:
 	var mouse_pos = get_viewport().get_mouse_position()
 	
