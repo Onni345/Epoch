@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="IngredientData" format=3 uid="uid://d0qf5jqvdq8gq"]
+
+[ext_resource type="Script" uid="uid://c22wyi5w5q4r0" path="res://src/data/ingredients/ingredient_data.gd" id="1_sscf2"]
+
+[resource]
+script = ExtResource("1_sscf2")
+id = "water"
+display_name = "Water"
+base_moisture = 1.0
+oil_absorption = 0.0
+metadata/_custom_type_script = "uid://c22wyi5w5q4r0"
