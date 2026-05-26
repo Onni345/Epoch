@@ -1,3 +1,4 @@
+@tool
 extends Node3D
 class_name LevelDirector
 
@@ -17,9 +18,33 @@ var world_environment: WorldEnvironment = null
 var chef_instance: Node3D = null
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		setup_editor_preview()
+		return
+		
 	if grid_manager.has_signal("grid_generation_completed"):
 		grid_manager.grid_generation_completed.connect(_on_grid_ready)
 
+func setup_editor_preview() -> void:
+	print("Running live layout preview generation inside the editor workspace")
+	
+	# 1. Clean up old preview junk nodes left over from opening/closing scenes
+	for child in get_children():
+		if child.name.begins_with("Editor_"): child.queue_free()
+		
+	# 2. Force your grid manager to build its tile layout right now
+	if grid_manager:
+		grid_manager.initialize_and_generate_grid() # Runs your modular map array block
+		
+	# 3. Spawn a stationary placeholder mesh where the camera and lighting will be
+	setup_cinematic_environment()
+	setup_camera()
+	
+	# Mark editor-only elements so we can clean them up or flag them easily
+	if camera: camera.name = "Editor_Preview_Camera"
+	if sun_light: sun_light.name = "Editor_Sun_Light"
+	
+	
 func _on_grid_ready() -> void:
 	setup_cinematic_environment()
 	spawn_chef_in_kitchen() # Spawn character first
@@ -85,5 +110,5 @@ func setup_camera() -> void:
 	
 	camera.look_at(grid_center, Vector3.UP)
 	
-	if input_manager != null:
+	if input_manager != null and "camera" in input_manager:
 		input_manager.camera = camera

@@ -7,28 +7,14 @@
 
 [node name="Main" type="Node3D" unique_id=280920864]
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1589200571]
-texture_filter = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-stretch = true
-
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=218425256]
-handle_input_locally = false
-size = Vector2i(2560, 1440)
-render_target_update_mode = 4
-
-[node name="LevelDirector" type="Node3D" parent="SubViewportContainer/SubViewport" unique_id=1775325125]
+[node name="LevelDirector" type="Node3D" parent="." unique_id=1775325125]
 script = ExtResource("1_director")
 
-[node name="GridManager" type="Node3D" parent="SubViewportContainer/SubViewport" unique_id=717908009]
+[node name="GridManager" type="Node3D" parent="." unique_id=717908009]
 script = ExtResource("2_grid")
 
-[node name="NavManager" type="Node3D" parent="SubViewportContainer/SubViewport" unique_id=1164748494]
+[node name="NavManager" type="Node3D" parent="." unique_id=1164748494]
 script = ExtResource("3_nav")
 
-[node name="InputManager" type="Node3D" parent="SubViewportContainer/SubViewport" unique_id=916092614]
+[node name="InputManager" type="Node3D" parent="." unique_id=916092614]
 script = ExtResource("4_input")

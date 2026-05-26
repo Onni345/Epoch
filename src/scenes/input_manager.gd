@@ -1,3 +1,4 @@
+@tool
 extends Node3D
 
 # exist statically inside main.tscn
@@ -14,6 +15,9 @@ func _ready() -> void:
 	pass 
 
 func _input(event):
+	if Engine.is_editor_hint():
+		return
+		
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			var requested_grid_coord = get_mouse_grid_position()
@@ -39,6 +43,9 @@ func _input(event):
 					chef.move(world_waypoints)
 
 func _process(_delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
+		
 	var current_grid_coord = get_mouse_grid_position()
 	if (current_grid_coord != last_hovered_coord):
 		var old_tile: Node3D = grid_manager.get_tile_at(last_hovered_coord)

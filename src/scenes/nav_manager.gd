@@ -1,9 +1,13 @@
+@tool
 extends Node3D
 
 @onready var astar_grid = AStarGrid2D.new()
 @onready var grid_manager = $"../GridManager"
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return # Do not build pathfinding maps inside the asset designer
+		
 	var max_size = grid_manager.grid_size
 	astar_grid.region = Rect2i(0, 0, max_size.x, max_size.y)
 	astar_grid.cell_size = Vector2i(1, 1)

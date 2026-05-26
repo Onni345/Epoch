@@ -1,3 +1,4 @@
+@tool
 extends Node3D
 
 signal grid_generation_completed
@@ -37,7 +38,11 @@ func grid_to_world_PLAYER(coords: Vector2i) -> Vector3:
 	var world_z = coords.y * cell_size + (cell_size / 2.0)
 	return Vector3(world_x, 0.9, world_z)
 
-func initialize_and_generate_grid(map_data: Array[int]) -> void:
+func initialize_and_generate_grid(map_data: Array[int] = MAP_LEVEL_1) -> void:
+	for child in get_children():
+		child.queue_free()
+	tile_registry.clear()
+	
 	var num_tiles = len(map_data)
 	for idx in num_tiles:
 		# row ("OUT") in worldspace
