@@ -17,11 +17,15 @@ var sun_light: DirectionalLight3D = null
 var world_environment: WorldEnvironment = null
 var chef_instance: Node3D = null
 
+#pixelated renderer
+var screen_shader: MeshInstance3D = null
+
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		setup_editor_preview()
 		return
-		
+	
+	# grid manager shoots a signal here when it has preloaded all assets. only then do we setup cam, environment, shaders
 	if grid_manager.has_signal("grid_generation_completed"):
 		grid_manager.grid_generation_completed.connect(_on_grid_ready)
 
@@ -38,7 +42,7 @@ func setup_editor_preview() -> void:
 		
 	# 3. Spawn a stationary placeholder mesh where the camera and lighting will be
 	setup_cinematic_environment()
-	setup_camera()
+	setup_camera_and_shader()
 	
 	# Mark editor-only elements so we can clean them up or flag them easily
 	if camera: camera.name = "Editor_Preview_Camera"
@@ -48,10 +52,11 @@ func setup_editor_preview() -> void:
 func _on_grid_ready() -> void:
 	setup_cinematic_environment()
 	spawn_chef_in_kitchen() # Spawn character first
-	setup_camera()
+	setup_camera_and_shader()
 
 # set up environment in script
 func setup_cinematic_environment() -> void:
+
 	world_environment = WorldEnvironment.new()
 	var env = Environment.new()
 	env.background_mode = Environment.BG_COLOR
@@ -87,7 +92,7 @@ func spawn_chef_in_kitchen() -> void:
 	if input_manager != null:
 		input_manager.chef = chef_instance
 
-func setup_camera() -> void:
+func setup_camera_and_shader() -> void:
 	camera = Camera3D.new()
 	camera.projection = Camera3D.PROJECTION_PERSPECTIVE
 	camera.fov = camera_fov
@@ -112,3 +117,19 @@ func setup_camera() -> void:
 	
 	if input_manager != null and "camera" in input_manager:
 		input_manager.camera = camera
+	
+	# PIXELATED RENDERER
+
+	screen_shader = MeshInstance3D.new()
+	screen_shader.extra_cull_margin = 16384.0;
+	screen_shader.mesh = QuadMesh.new()
+
+	var texture_overlay: QuadMesh = screen_shader.mesh;
+	texture_overlay.size = Vector2(2.0, 2.0);
+	texture_overlay.flip_faces = true;
+
+	var shader_material = ShaderMaterial.new()
+	shader_material.shader = load("res://src/scenes/pixel_renderer.gdshader")
+
+	screen_shader.material_override = shader_material
+	add_child(screen_shader);

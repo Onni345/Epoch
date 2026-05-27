@@ -6,14 +6,14 @@ size = Vector3(0.92, 0.75, 0.92)
 [sub_resource type="BoxShape3D" id="BoxShape3D_o4fvr"]
 size = Vector3(1, 0.75, 1)
 
-[node name="Countertop" type="Node3D"]
+[node name="Countertop" type="Node3D" unique_id=1343820644]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=521170619]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.375, 0)
 mesh = SubResource("BoxMesh_o4fvr")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="Area3D" type="Area3D" parent="." unique_id=734570207]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=635062059]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.375, 0)
 shape = SubResource("BoxShape3D_o4fvr")

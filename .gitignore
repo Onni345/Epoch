@@ -16,3 +16,5 @@ ios/
 *.tmp
 Thumbs.db
 desktop.ini
+
+.vscode/
